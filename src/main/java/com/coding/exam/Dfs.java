@@ -32,6 +32,26 @@ public class Dfs {
             }
         }
     }
+
+    public void ddfs(int[][] grapth, int v) {
+        Stack<Integer> stack = new Stack<>();
+        boolean[] visited = new boolean[9];
+        stack.push(v);
+
+        while (!stack.isEmpty()) {
+            int vv = stack.pop();
+            System.out.println(vv);
+
+            for (int i : grapth[vv]) {
+                if (!visited[i]) {
+                    stack.push(i);
+                    visited[i] = true;
+                }
+            }
+        }
+
+
+    }
     public static void stackDfs(int[][] graph, int start) {
         Stack<Integer> stack = new Stack<>();
         boolean[] visited = new boolean[9];
