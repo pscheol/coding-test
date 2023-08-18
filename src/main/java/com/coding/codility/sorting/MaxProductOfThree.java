@@ -1,4 +1,4 @@
-package com.coding.codility.prefixsums;
+package com.coding.codility.sorting;
 
 import java.util.Arrays;
 
