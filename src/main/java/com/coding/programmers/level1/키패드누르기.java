@@ -5,14 +5,18 @@ public class 키패드누르기 {
     public static void main(String[] args) {
         Solution sol = new Solution();
         String result = sol.solution(new int[]{1, 3, 4, 5, 8, 2, 1, 4, 5, 9, 5}, "right");
+        String result2 = sol.solution(new int[]{7, 0, 8, 2, 8, 3, 1, 5, 7, 6, 2}, "left");
+        String result3 = sol.solution(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 0}, "right");
+
         System.out.println(result);
+        System.out.println(result2);
+        System.out.println(result3);
     }
     private static class Solution {
-        private static final int[] KEYPAD = {4,1,1,1,2,2,2,3,3,3};
         public String solution(int[] numbers, String hand) {
             StringBuilder answer = new StringBuilder();
-            int right = -1;
-            int left = -1;
+            int right = 12;
+            int left = 10;
 
             for (int number : numbers) {
                 if (number == 1 || number == 4 || number == 7) {
@@ -49,14 +53,12 @@ public class 키패드누르기 {
             return answer.toString();
         }
 
-        private int keyLen(int num, int point) {
-            System.out.println("pint=" + point + ", num=" + num);
-            int sum = KEYPAD[num];
-            if (num != 2 && num != 5 && num != 8 && num != 0) {
-                sum += 1;
-            }
-            int result = Math.abs(KEYPAD[point] - sum);
-            return result == 0 ? KEYPAD[point] : result;
+        private int keyLen(int src, int number) {
+            System.out.println("src=" + src + ", number=" + number);
+            int hand = src == 0 ? 11 : src;
+            int chkNum = number == 0 ? 11 : number;
+            int check = Math.abs(hand - chkNum);
+            return (check / 3) + (check % 3);
         }
     }
 }
