@@ -3,7 +3,7 @@ package com.coding.backjoon;
 import java.io.*;
 import java.util.*;
 
-public class 깊이우선탐색_1 {
+public class 너비우선탐색_1_24444 {
     static int[] visited;
     static int cnt = 1;
     static ArrayList<ArrayList<Integer>> adjList = new ArrayList<>();
@@ -37,8 +37,8 @@ public class 깊이우선탐색_1 {
             Collections.sort(adj);
         }
 
-        dfs(r);
-        
+        bfs(r);
+
 
         for (int i = 1; i < visited.length; i++) {
             bw.write(visited[i] + "\n");
@@ -47,14 +47,21 @@ public class 깊이우선탐색_1 {
         bw.flush();
     }
 
-
-    public static void dfs(int r) {
+    private static void bfs(int r) {
+        Queue<Integer> queue = new LinkedList<>();
         visited[r] = cnt;
-        List<Integer> adj = adjList.get(r);
-        for (Integer v : adj) {
-            if (visited[v] == 0) {
-                cnt++;
-                dfs(v);
+
+        queue.offer(r);
+
+
+        while (!queue.isEmpty()) {
+            int u = queue.poll();
+            List<Integer> adj = adjList.get(u);
+            for (Integer v : adj) {
+                if (visited[v] == 0) {
+                    visited[v] = ++cnt;
+                    queue.offer(v);
+                }
             }
         }
     }
