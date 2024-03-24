@@ -7,25 +7,18 @@ public class 타겟넘버 {
     }
 
     static class Solution {
-        int answer = 0;
         public int solution(int[] numbers, int target) {
-            dfs(0, 0, numbers, target);
-            return answer;
+            return dfs(0, 0, numbers, target);
         }
 
-        void dfs(int sum, int idx, int[] nums, int target) {
-            System.out.println("dfs idx=" + idx +", sum=" + sum);
+        int dfs(int sum, int idx, int[] nums, int target) {
             if (idx == nums.length && sum == target) {
-                answer++;
-                return;
+                return 1;
             }
             if (idx >= nums.length) {
-                return;
+                return 0;
             }
-
-            dfs(sum + nums[idx], idx + 1, nums, target);
-            dfs(sum - nums[idx], idx + 1, nums, target);
-
+            return dfs(sum + nums[idx], idx + 1, nums, target) + dfs(sum - nums[idx], idx + 1, nums, target);
         }
     }
 }
