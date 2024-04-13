@@ -42,6 +42,27 @@ public class 크레인인형뽑기게임 {
     private static class Solution {
         public int solution(int[][] board, int[] moves) {
             int answer = 0;
+            Stack<Integer> basket = new Stack<>();
+            for (int move : moves) {
+                for (int i = 0; i < board.length; i++) {
+                    int doll = board[i][move - 1];
+                    if (doll != 0) {
+                        if (!basket.isEmpty() && basket.peek() == doll) {
+                            basket.pop();
+                            answer += 2;
+                        } else {
+                            basket.push(doll);
+                        }
+                        board[i][move - 1] = 0;
+                        break;
+                    }
+                }
+            }
+            return answer;
+        }
+
+        public int solution2(int[][] board, int[] moves) {
+            int answer = 0;
             Deque<Integer>[] deques = new ArrayDeque[board.length + 1];
             Stack<Integer> basket = new Stack<>();
 
@@ -64,36 +85,14 @@ public class 크레인인형뽑기게임 {
                 int pop = deques[move].removeLast();
                 System.out.println("move="+ move + ", pop=" +pop +", basket=" + basket +", answer=" + answer);
                 if (!basket.isEmpty()) {
-                     if (pop == basket.peek()) {
-                         basket.pop();
-                         answer+=2;
-                     } else {
-                         basket.push(pop);
-                     }
+                    if (pop == basket.peek()) {
+                        basket.pop();
+                        answer+=2;
+                    } else {
+                        basket.push(pop);
+                    }
                 } else {
                     basket.push(pop);
-                }
-            }
-            return answer;
-        }
-
-        public int solution2(int[][] board, int[] moves) {
-            int answer = 0;
-            Stack<Integer> stack = new Stack<>();
-            for (int move : moves) {
-                for (int j = 0; j < board.length; j++) {
-                    if (board[j][move - 1] != 0) {
-                        if (stack.isEmpty()) { //비어있을 경우
-                            stack.push(board[j][move - 1]);
-                        } else if (board[j][move - 1] == stack.peek()) { //두개가 같을 경우
-                            stack.pop();
-                            answer += 2;
-                        } else {
-                            stack.push(board[j][move - 1]); //아무일도 일어나지 않음
-                        }
-                        board[j][move - 1] = 0; //꺼냄
-                        break;
-                    }
                 }
             }
             return answer;
