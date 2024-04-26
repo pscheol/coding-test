@@ -44,33 +44,29 @@ public class 신고결과받기 {
             Map<String, Set<String>> reportMap = new LinkedHashMap<>();
             Map<String, Integer> reportCount = new LinkedHashMap<>();
 
-            for (String s : id_list) {
-                reportMap.put(s, new HashSet<>());
-                reportCount.put(s, 0);
-            }
-
             for (String list : report) {
                 String[] split = list.split(" ");
                 String u = split[0];
                 String r = split[1];
-
-                if (reportMap.containsKey(u)) {
-                    Set<String> reportSet = reportMap.get(u);
-                    reportSet.add(r);
-                    reportMap.put(u , reportSet);
-                }
+                Set<String> reportSet = reportMap.getOrDefault(r, new HashSet<>());
+                reportSet.add(u);
+                reportMap.put(r, reportSet);
             }
 
-            reportMap.forEach((u, set) -> {
-                for (String s : set) {
-                    reportCount.put(s, reportCount.get(s) + 1);
+            reportMap.forEach((r, set) -> {
+                if (set.size() >= k) {
+                    for (String u : set) {
+                        reportCount.put(u, reportCount.getOrDefault(u, 0) + 1);
+                    }
                 }
             });
 
-            return reportMap.values().stream().mapToInt(set -> {
-                set.removeIf(s -> reportCount.get(s) < k);
-                return set.size();}
-            ).toArray();
+            int[] answer = new int[id_list.length];
+
+            for (int i = 0; i < id_list.length; i++) {
+                answer[i] = reportCount.getOrDefault(id_list[i], 0);
+            }
+            return answer;
         }
     }
 }
